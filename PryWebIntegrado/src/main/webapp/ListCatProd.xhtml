@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h2>Categorias por productos</h2>
+        <h:form id="fr3">
+            <p:panelGrid columns="2">
+                <p:outputLabel value="seleccione Categoria"/>
+                <p:selectOneMenu value="#{control2.cat.id}">
+                    <f:selectItem itemLabel="--elegir--"/>
+                    <f:selectItems value="#{control2.liscat}"/>
+                    <p:ajax listener="#{control2.consulta()}" update=":fr1"/>
+                </p:selectOneMenu>
+            </p:panelGrid>
+        </h:form>
+        <h:form id="fr1">
+            <p:dataTable value="#{control2.lisprod}" var="prod" paginator="true" rows="5">
+                <p:column headerText="codigo">
+                    <p:outputLabel value="#{prod.id}"/>
+                </p:column>
+                <p:column headerText="Descripcion">
+                    <p:outputLabel value="#{prod.nombre}"/>
+                </p:column>
+                <p:column headerText="Precio Unitario">
+                    <p:outputLabel value="#{prod.unit}"/>
+                </p:column>
+                <p:column headerText="Stock">
+                    <p:outputLabel value="#{prod.stock}"/>
+                </p:column>
+                <p:column headerText="foto">
+                    <p:graphicImage value="/fotos/#{prod.id}.jpg" height="90" width="90"/>
+                </p:column>
+                <p:column headerText="Proveedor">
+                    <p:commandLink value="Ver" action="#{control2.consulta2(prod)}" update=":fr2"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <h:form id="fr2">
+            <p:panelGrid columns="1">
+                <p:outputLabel value="Nombre: #{control2.nombre2}" style="color:blue;"/>
+                <p:dataTable value="#{control2.prov}" var="prove">
+                    <p:column headerText="Id">
+                        <p:outputLabel value="#{prove.id}"/>
+                    </p:column>
+                    <p:column headerText="Nombre">
+                        <p:outputLabel value="#{prove.nombre}"/>
+                    </p:column>
+                    <p:column headerText="Email">
+                        <p:outputLabel value="#{prove.email}"/>
+                    </p:column>
+                    <p:column headerText="Direccion">
+                        <p:outputLabel value="#{prove.direc}"/>
+                    </p:column>
+                    <p:column headerText="Telefono">
+                        <p:outputLabel value="#{prove.telef}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:panelGrid>
+        </h:form>
+    </h:body>
+</html>
